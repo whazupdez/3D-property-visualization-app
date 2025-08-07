@@ -1,0 +1,195 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    font-family: 'Inter', system-ui, sans-serif;
+  }
+  
+  body {
+    @apply bg-black text-white antialiased;
+    overflow: hidden; /* Prevent scrolling on TV */
+  }
+  
+  /* TV-optimized focus styles */
+  *:focus {
+    @apply outline-none ring-2 ring-blue-400 ring-offset-2 ring-offset-black;
+  }
+  
+  /* Custom scrollbar for TV */
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+  
+  ::-webkit-scrollbar-track {
+    @apply bg-gray-800;
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    @apply bg-gray-600 rounded-full;
+  }
+  
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-gray-500;
+  }
+}
+
+@layer components {
+  /* TV-optimized button styles */
+  .tv-button {
+    @apply min-h-tv-button min-w-tv-button px-6 py-3 rounded-lg font-semibold transition-all duration-200;
+    @apply focus:scale-105 hover:scale-105;
+  }
+  
+  .tv-button-primary {
+    @apply tv-button bg-blue-500 hover:bg-blue-600 text-white;
+  }
+  
+  .tv-button-secondary {
+    @apply tv-button bg-gray-600 hover:bg-gray-500 text-white;
+  }
+  
+  /* TV-optimized card styles */
+  .tv-card {
+    @apply bg-white/10 backdrop-blur-sm rounded-xl border border-white/20;
+    @apply transition-all duration-300 hover:bg-white/20 hover:scale-105;
+  }
+  
+  /* TV-optimized text styles */
+  .tv-heading {
+    @apply text-tv-h1 font-bold leading-tight;
+  }
+  
+  .tv-subheading {
+    @apply text-tv-h2 font-semibold;
+  }
+  
+  .tv-body {
+    @apply text-tv-body leading-relaxed;
+  }
+  
+  /* Animation utilities */
+  .animate-fade-in {
+    animation: fade-in 0.5s ease-out;
+  }
+  
+  .animate-slide-in {
+    animation: slide-in 0.6s ease-out;
+  }
+  
+  .animate-scale-in {
+    animation: scale-in 0.4s ease-out;
+  }
+}
+
+@layer utilities {
+  /* TV-safe area utilities */
+  .tv-safe {
+    @apply p-tv-safe;
+  }
+  
+  .tv-safe-x {
+    @apply px-tv-safe;
+  }
+  
+  .tv-safe-y {
+    @apply py-tv-safe;
+  }
+  
+  /* Aspect ratio utilities */
+  .aspect-tv {
+    aspect-ratio: 16 / 9;
+  }
+  
+  /* Grid utilities for TV layout */
+  .tv-grid {
+    @apply grid gap-6;
+  }
+  
+  .tv-grid-2 {
+    @apply tv-grid grid-cols-1 md:grid-cols-2;
+  }
+  
+  .tv-grid-3 {
+    @apply tv-grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3;
+  }
+  
+  .tv-grid-4 {
+    @apply tv-grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4;
+  }
+}
+
+/* Custom animations */
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slide-in {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes scale-in {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* TV-specific media queries */
+@media (min-width: 1920px) {
+  /* 4K TV optimizations */
+  .tv-heading {
+    @apply text-6xl;
+  }
+  
+  .tv-subheading {
+    @apply text-4xl;
+  }
+  
+  .tv-body {
+    @apply text-2xl;
+  }
+}
+
+@media (max-height: 720px) {
+  /* Smaller TV optimizations */
+  .tv-heading {
+    @apply text-3xl;
+  }
+  
+  .tv-subheading {
+    @apply text-2xl;
+  }
+  
+  .tv-body {
+    @apply text-lg;
+  }
+}
+
+/* Print styles (for documentation) */
+@media print {
+  body {
+    @apply bg-white text-black;
+  }
+  
+  .tv-card {
+    @apply bg-gray-100 border-gray-300;
+  }
+}
