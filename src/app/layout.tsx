@@ -30,8 +30,8 @@ export const metadata: Metadata = {
 export const viewport = {
   width: 'device-width',
   initialScale: 1,
-  maximumScale: 1,
-  userScalable: false, // Prevent zooming on TV
+  maximumScale: 5,
+  userScalable: true, // Allow zooming for mobile accessibility
 };
 
 export default function RootLayout({
@@ -52,8 +52,8 @@ export default function RootLayout({
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
         
-        {/* Prevent text size adjustment on orientation change */}
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+        {/* Responsive viewport for mobile and TV */}
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes" />
         
         {/* Favicon and app icons */}
         <link rel="icon" href="/favicon.ico" />
@@ -62,7 +62,7 @@ export default function RootLayout({
         <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
         <link rel="manifest" href="/site.webmanifest" />
       </head>
-      <body className={`${inter.className} h-full overflow-hidden bg-black text-white antialiased`}>
+      <body className={`${inter.className} h-full overflow-x-hidden bg-black text-white antialiased`}>
         {/* Skip to main content for accessibility */}
         <a 
           href="#main-content" 

@@ -6,6 +6,16 @@ module.exports = {
     './src/app/**/*.{js,ts,jsx,tsx,mdx}',
   ],
   theme: {
+    screens: {
+      'xs': '475px',
+      'sm': '640px',
+      'md': '768px',
+      'lg': '1024px',
+      'xl': '1280px',
+      '2xl': '1536px',
+      'mobile-landscape': {'raw': '(max-height: 500px) and (orientation: landscape)'},
+      'tablet-landscape': {'raw': '(min-width: 768px) and (max-height: 1024px) and (orientation: landscape)'},
+    },
     extend: {
       colors: {
         primary: {
@@ -33,6 +43,8 @@ module.exports = {
       spacing: {
         'tv-safe': '2rem',
         'tv-section': '4rem',
+        'mobile-safe': '1rem',
+        'mobile-section': '2rem',
       },
       aspectRatio: {
         'tv': '16 / 9',
@@ -58,9 +70,11 @@ module.exports = {
       },
       minHeight: {
         'tv-button': '80px',
+        'mobile-button': '44px',
       },
       minWidth: {
         'tv-button': '200px',
+        'mobile-button': '120px',
       },
     },
   },

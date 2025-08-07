@@ -9,7 +9,13 @@
   
   body {
     @apply bg-black text-white antialiased;
-    overflow: hidden; /* Prevent scrolling on TV */
+    overflow-x: hidden; /* Prevent horizontal scrolling */
+  }
+  
+  @media (max-height: 500px) and (orientation: landscape) {
+    body {
+      overflow-y: auto; /* Allow vertical scrolling on mobile landscape */
+    }
   }
   
   /* TV-optimized focus styles */
@@ -36,10 +42,16 @@
 }
 
 @layer components {
-  /* TV-optimized button styles */
+  /* Responsive button styles */
   .tv-button {
     @apply min-h-tv-button min-w-tv-button px-6 py-3 rounded-lg font-semibold transition-all duration-200;
     @apply focus:scale-105 hover:scale-105;
+  }
+  
+  @media (max-height: 500px) and (orientation: landscape) {
+    .tv-button {
+      @apply min-h-mobile-button min-w-mobile-button px-3 py-2 text-sm;
+    }
   }
   
   .tv-button-primary {
@@ -50,10 +62,16 @@
     @apply tv-button bg-gray-600 hover:bg-gray-500 text-white;
   }
   
-  /* TV-optimized card styles */
+  /* Responsive card styles */
   .tv-card {
     @apply bg-white/10 backdrop-blur-sm rounded-xl border border-white/20;
     @apply transition-all duration-300 hover:bg-white/20 hover:scale-105;
+  }
+  
+  @media (max-height: 500px) and (orientation: landscape) {
+    .tv-card {
+      @apply rounded-lg hover:scale-102;
+    }
   }
   
   /* TV-optimized text styles */
@@ -152,7 +170,7 @@
   }
 }
 
-/* TV-specific media queries */
+/* Responsive media queries */
 @media (min-width: 1920px) {
   /* 4K TV optimizations */
   .tv-heading {
@@ -168,7 +186,7 @@
   }
 }
 
-@media (max-height: 720px) {
+@media (max-height: 720px) and (min-width: 1024px) {
   /* Smaller TV optimizations */
   .tv-heading {
     @apply text-3xl;
@@ -180,6 +198,30 @@
   
   .tv-body {
     @apply text-lg;
+  }
+}
+
+@media (max-height: 500px) and (orientation: landscape) {
+  /* Mobile landscape optimizations */
+  .tv-heading {
+    @apply text-xl;
+  }
+  
+  .tv-subheading {
+    @apply text-lg;
+  }
+  
+  .tv-body {
+    @apply text-sm;
+  }
+  
+  /* Compact spacing for mobile landscape */
+  .mobile-landscape-compact {
+    @apply py-2 px-4;
+  }
+  
+  .mobile-landscape-section {
+    @apply min-h-screen py-4;
   }
 }
 

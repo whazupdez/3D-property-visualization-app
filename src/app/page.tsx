@@ -159,24 +159,24 @@ export default function HomePage() {
     <div className="min-h-screen bg-gradient-to-br from-gray-900 via-blue-900 to-purple-900">
       {/* Navigation */}
       <nav className="fixed top-0 left-0 right-0 z-50 bg-black/20 backdrop-blur-md border-b border-white/10">
-        <div className="max-w-7xl mx-auto px-6 py-4">
-          <div className="flex items-center justify-between">
-            <h1 className="text-2xl font-bold text-white">{samplePropertyData.overview.name}</h1>
-            <div className="flex space-x-4">
+        <div className="max-w-7xl mx-auto px-4 mobile-landscape:px-2 py-4 mobile-landscape:py-2">
+          <div className="flex items-center justify-between mobile-landscape:flex-col mobile-landscape:space-y-2">
+            <h1 className="text-2xl mobile-landscape:text-lg font-bold text-white mobile-landscape:text-center">{samplePropertyData.overview.name}</h1>
+            <div className="flex space-x-4 mobile-landscape:space-x-2 mobile-landscape:flex-wrap mobile-landscape:justify-center">
               {navigationSections.map((section) => {
                 const IconComponent = section.icon;
                 return (
                   <button
                     key={section.id}
                     onClick={() => scrollToSection(section.id)}
-                    className={`flex items-center space-x-2 px-6 py-3 rounded-lg transition-all duration-200 ${
+                    className={`flex items-center space-x-2 px-6 py-3 mobile-landscape:px-3 mobile-landscape:py-1 rounded-lg transition-all duration-200 mobile-landscape:text-xs ${
                       currentSection === section.id
                         ? 'bg-blue-600 text-white'
                         : 'bg-white/10 text-gray-300 hover:bg-white/20'
                     }`}
                   >
-                    <IconComponent className="w-5 h-5" />
-                    <span className="font-medium">{section.name}</span>
+                    <IconComponent className="w-5 h-5 mobile-landscape:w-4 mobile-landscape:h-4" />
+                    <span className="font-medium mobile-landscape:hidden lg:inline">{section.name}</span>
                   </button>
                 );
               })}
@@ -186,34 +186,34 @@ export default function HomePage() {
       </nav>
 
       {/* Main Content */}
-      <main className="pt-20 space-y-0">
+      <main className="pt-20 mobile-landscape:pt-24 space-y-0">
         {/* Overview Section */}
-        <section id="overview" className="min-h-screen flex items-center justify-center p-8">
-          <div className="max-w-7xl mx-auto grid grid-cols-2 gap-12 items-center">
-            <div>
+        <section id="overview" className="min-h-screen flex items-center justify-center p-8 mobile-landscape:p-4">
+          <div className="max-w-7xl mx-auto grid grid-cols-2 mobile-landscape:grid-cols-1 gap-12 mobile-landscape:gap-6 items-center">
+            <div className="mobile-landscape:order-2">
               <img 
                 src={samplePropertyData.overview.heroImage} 
                 alt={samplePropertyData.overview.name}
-                className="w-full h-96 object-cover rounded-2xl shadow-2xl"
+                className="w-full h-96 mobile-landscape:h-48 object-cover rounded-2xl mobile-landscape:rounded-lg shadow-2xl"
               />
             </div>
-            <div>
-              <h1 className="text-4xl font-bold mb-2">{samplePropertyData.overview.name}</h1>
-              <p className="text-xl text-gray-300 mb-4">{samplePropertyData.overview.tagline}</p>
-              <p className="text-gray-300 mb-6">{samplePropertyData.overview.description}</p>
+            <div className="mobile-landscape:order-1">
+              <h1 className="text-4xl mobile-landscape:text-2xl font-bold mb-2">{samplePropertyData.overview.name}</h1>
+              <p className="text-xl mobile-landscape:text-base text-gray-300 mb-4">{samplePropertyData.overview.tagline}</p>
+              <p className="text-gray-300 mobile-landscape:text-sm mb-6 mobile-landscape:mb-4">{samplePropertyData.overview.description}</p>
               
-              <div className="grid grid-cols-2 gap-4 mb-6">
+              <div className="grid grid-cols-2 gap-4 mb-6 mobile-landscape:mb-4">
                 <div className="text-center">
-                  <div className="text-2xl font-bold">{samplePropertyData.overview.keySpecs.bedrooms}</div>
-                  <div className="text-gray-400">Bedrooms</div>
+                  <div className="text-2xl mobile-landscape:text-lg font-bold">{samplePropertyData.overview.keySpecs.bedrooms}</div>
+                  <div className="text-gray-400 mobile-landscape:text-xs">Bedrooms</div>
                 </div>
                 <div className="text-center">
-                  <div className="text-2xl font-bold">{samplePropertyData.overview.keySpecs.bathrooms}</div>
-                  <div className="text-gray-400">Bathrooms</div>
+                  <div className="text-2xl mobile-landscape:text-lg font-bold">{samplePropertyData.overview.keySpecs.bathrooms}</div>
+                  <div className="text-gray-400 mobile-landscape:text-xs">Bathrooms</div>
                 </div>
               </div>
               
-              <div className="text-3xl font-bold text-blue-400 mb-4">
+              <div className="text-3xl mobile-landscape:text-xl font-bold text-blue-400 mb-4">
                 ${samplePropertyData.overview.price.toLocaleString()}
               </div>
             </div>
@@ -221,29 +221,29 @@ export default function HomePage() {
         </section>
 
         {/* Location Section */}
-        <section id="location" className="min-h-screen flex items-center justify-center p-8 bg-black/20">
+        <section id="location" className="min-h-screen flex items-center justify-center p-8 mobile-landscape:p-4 bg-black/20">
           <div className="max-w-7xl mx-auto">
-            <h2 className="text-3xl font-bold mb-6 text-center">Prime Location</h2>
-            <div className="grid grid-cols-2 gap-8">
+            <h2 className="text-3xl mobile-landscape:text-xl font-bold mb-6 mobile-landscape:mb-4 text-center">Prime Location</h2>
+            <div className="grid grid-cols-2 mobile-landscape:grid-cols-1 gap-8 mobile-landscape:gap-4">
               <div>
-                <h3 className="text-xl font-semibold mb-4">Address</h3>
-                <p className="text-gray-300 mb-6">{samplePropertyData.location.address}</p>
+                <h3 className="text-xl mobile-landscape:text-lg font-semibold mb-4 mobile-landscape:mb-2">Address</h3>
+                <p className="text-gray-300 mobile-landscape:text-sm mb-6 mobile-landscape:mb-4">{samplePropertyData.location.address}</p>
                 
-                <h3 className="text-xl font-semibold mb-4">Nearby Amenities</h3>
-                <div className="space-y-3">
+                <h3 className="text-xl mobile-landscape:text-lg font-semibold mb-4 mobile-landscape:mb-2">Nearby Amenities</h3>
+                <div className="space-y-3 mobile-landscape:space-y-2">
                   {samplePropertyData.location.nearbyAmenities.map((amenity, index) => (
-                    <div key={index} className="flex items-center space-x-3">
-                      <span className="text-2xl">{amenity.icon}</span>
+                    <div key={index} className="flex items-center space-x-3 mobile-landscape:space-x-2">
+                      <span className="text-2xl mobile-landscape:text-lg">{amenity.icon}</span>
                       <div>
-                        <div className="font-medium">{amenity.name}</div>
-                        <div className="text-sm text-gray-400">{amenity.distance} • {amenity.category}</div>
+                        <div className="font-medium mobile-landscape:text-sm">{amenity.name}</div>
+                        <div className="text-sm mobile-landscape:text-xs text-gray-400">{amenity.distance} • {amenity.category}</div>
                       </div>
                     </div>
                   ))}
                 </div>
               </div>
               <div>
-                <div className="bg-black/50 rounded-lg h-96 overflow-hidden relative group">
+                <div className="bg-black/50 rounded-lg h-96 mobile-landscape:h-48 overflow-hidden relative group">
                   <Canvas camera={{ position: [5, 5, 5], fov: 50 }}>
                     <Suspense fallback={null}>
                       <Environment preset="sunset" />
@@ -255,14 +255,14 @@ export default function HomePage() {
                   </Canvas>
                   <button
                     onClick={open3DModal}
-                    className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex items-center justify-center text-white font-semibold text-lg hover:bg-black/60"
+                    className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex items-center justify-center text-white font-semibold text-lg mobile-landscape:text-sm hover:bg-black/60"
                   >
                     Open Fullscreen 3D View
                   </button>
                 </div>
                 <button
                   onClick={openFullView}
-                  className="w-full mt-4 bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded transition-colors duration-200"
+                  className="w-full mt-4 mobile-landscape:mt-2 bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 mobile-landscape:py-1 px-4 mobile-landscape:px-2 mobile-landscape:text-sm rounded transition-colors duration-200"
                 >
                   Full View
                 </button>
@@ -272,19 +272,19 @@ export default function HomePage() {
         </section>
 
         {/* Units Section */}
-        <section id="units" className="min-h-screen flex items-center justify-center p-8">
+        <section id="units" className="min-h-screen flex items-center justify-center p-8 mobile-landscape:p-4">
           <div className="max-w-7xl mx-auto">
-            <h2 className="text-3xl font-bold mb-6 text-center">Available Types</h2>
-            <div className="grid grid-cols-3 gap-6">
+            <h2 className="text-3xl mobile-landscape:text-xl font-bold mb-6 mobile-landscape:mb-4 text-center">Available Types</h2>
+            <div className="grid grid-cols-3 mobile-landscape:grid-cols-2 gap-6 mobile-landscape:gap-4">
               {samplePropertyData.units.map((unit: any, index: number) => (
-                <div key={index} className="bg-white/10 backdrop-blur-sm rounded-xl p-6">
+                <div key={index} className="bg-white/10 backdrop-blur-sm rounded-xl p-6 mobile-landscape:p-4">
                   <img 
                     src={unit.gallery[0]} 
                     alt={unit.name} 
-                    className="w-full h-48 object-cover rounded-lg mb-4"
+                    className="w-full h-48 mobile-landscape:h-32 object-cover rounded-lg mb-4 mobile-landscape:mb-2"
                   />
-                  <h3 className="text-xl font-semibold mb-2">{unit.name}</h3>
-                  <div className="grid grid-cols-3 gap-2 text-sm mb-4">
+                  <h3 className="text-xl mobile-landscape:text-lg font-semibold mb-2 mobile-landscape:mb-1">{unit.name}</h3>
+                  <div className="grid grid-cols-3 gap-2 mobile-landscape:gap-1 text-sm mobile-landscape:text-xs mb-4 mobile-landscape:mb-2">
                     <div className="text-center">
                       <div className="font-bold">{unit.specs.bedrooms}</div>
                       <div className="text-gray-400">Beds</div>
@@ -298,12 +298,12 @@ export default function HomePage() {
                       <div className="text-gray-400">Sq Ft</div>
                     </div>
                   </div>
-                  <div className="text-lg font-bold text-blue-400 mb-4">
+                  <div className="text-lg mobile-landscape:text-base font-bold text-blue-400 mb-4 mobile-landscape:mb-2">
                     ${unit.price.toLocaleString()}
                   </div>
                   <button
                     onClick={openFloorPlanModal}
-                    className="w-full bg-purple-500 hover:bg-purple-600 text-white font-semibold py-2 px-4 rounded-lg transition-colors"
+                    className="w-full bg-purple-500 hover:bg-purple-600 text-white font-semibold py-2 mobile-landscape:py-1 px-4 mobile-landscape:px-2 mobile-landscape:text-sm rounded-lg transition-colors"
                   >
                     View Floor Plan
                   </button>
@@ -314,13 +314,13 @@ export default function HomePage() {
         </section>
 
         {/* Virtual Tours Section */}
-        <section id="tours" className="min-h-screen flex items-center justify-center p-8 bg-black/20">
+        <section id="tours" className="min-h-screen flex items-center justify-center p-8 mobile-landscape:p-4 bg-black/20">
           <div className="max-w-7xl mx-auto">
-            <h2 className="text-3xl font-bold mb-6 text-center">Virtual Tours</h2>
-            <div className="grid grid-cols-2 gap-6">
-              <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6">
-                <h3 className="text-xl font-semibold mb-4">3D Exterior Tour</h3>
-                <div className="bg-black/50 rounded-lg h-64 mb-4 overflow-hidden relative group">
+            <h2 className="text-3xl mobile-landscape:text-xl font-bold mb-6 mobile-landscape:mb-4 text-center">Virtual Tours</h2>
+            <div className="grid grid-cols-2 mobile-landscape:grid-cols-1 gap-6 mobile-landscape:gap-4">
+              <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6 mobile-landscape:p-4">
+                <h3 className="text-xl mobile-landscape:text-lg font-semibold mb-4 mobile-landscape:mb-2">3D Exterior Tour</h3>
+                <div className="bg-black/50 rounded-lg h-64 mobile-landscape:h-40 mb-4 mobile-landscape:mb-2 overflow-hidden relative group">
                   <Canvas camera={{ position: [5, 5, 5], fov: 50 }}>
                     <Suspense fallback={null}>
                       <Environment preset="sunset" />
@@ -332,16 +332,16 @@ export default function HomePage() {
                   </Canvas>
                   <button
                     onClick={open3DModal}
-                    className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex items-center justify-center text-white font-semibold text-lg hover:bg-black/60"
+                    className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex items-center justify-center text-white font-semibold text-lg mobile-landscape:text-sm hover:bg-black/60"
                   >
                     Open Fullscreen 3D View
                   </button>
                 </div>
-                <p className="text-gray-300">{samplePropertyData.virtualTours.tours3D[0]?.title || 'Interactive 3D Building Model'}</p>
+                <p className="text-gray-300 mobile-landscape:text-sm">{samplePropertyData.virtualTours.tours3D[0]?.title || 'Interactive 3D Building Model'}</p>
               </div>
-              <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6">
-                <h3 className="text-xl font-semibold mb-4">360° Interior Tour</h3>
-                <div className="bg-black/50 rounded-lg h-64 overflow-hidden mb-4 relative group">
+              <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6 mobile-landscape:p-4">
+                <h3 className="text-xl mobile-landscape:text-lg font-semibold mb-4 mobile-landscape:mb-2">360° Interior Tour</h3>
+                <div className="bg-black/50 rounded-lg h-64 mobile-landscape:h-40 overflow-hidden mb-4 mobile-landscape:mb-2 relative group">
                   {samplePropertyData.virtualTours.tours360[0]?.embedUrl ? (
                     <>
                       <iframe
@@ -352,7 +352,7 @@ export default function HomePage() {
                       />
                       <button
                         onClick={() => openTourModal(samplePropertyData.virtualTours.tours360[0])}
-                        className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex items-center justify-center text-white font-semibold text-lg hover:bg-black/60"
+                        className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex items-center justify-center text-white font-semibold text-lg mobile-landscape:text-sm hover:bg-black/60"
                       >
                         Open Fullscreen VR
                       </button>
@@ -360,13 +360,13 @@ export default function HomePage() {
                   ) : (
                     <div className="w-full h-full flex items-center justify-center">
                       <div className="text-center">
-                        <div className="text-4xl mb-2">🏠</div>
-                        <div>360° View</div>
+                        <div className="text-4xl mobile-landscape:text-2xl mb-2">🏠</div>
+                        <div className="mobile-landscape:text-sm">360° View</div>
                       </div>
                     </div>
                   )}
                 </div>
-                <p className="text-gray-300">{samplePropertyData.virtualTours.tours360[0]?.description || 'Interactive interior walkthrough'}</p>
+                <p className="text-gray-300 mobile-landscape:text-sm">{samplePropertyData.virtualTours.tours360[0]?.description || 'Interactive interior walkthrough'}</p>
               </div>
             </div>
             
@@ -376,19 +376,19 @@ export default function HomePage() {
 
         {/* Fullscreen VR Modal */}
         {isModalOpen && selectedTour && (
-          <div className="fixed inset-0 z-50 bg-black/90 backdrop-blur-sm flex items-center justify-center p-4">
-            <div className="relative w-full h-full max-w-7xl max-h-[90vh] bg-black rounded-lg overflow-hidden">
+          <div className="fixed inset-0 z-50 bg-black/90 backdrop-blur-sm flex items-center justify-center p-4 mobile-landscape:p-2">
+            <div className="relative w-full h-full max-w-7xl mobile-landscape:max-w-full max-h-[90vh] mobile-landscape:max-h-full bg-black rounded-lg mobile-landscape:rounded overflow-hidden">
               <button
                 onClick={closeTourModal}
-                className="absolute top-4 right-4 z-10 bg-red-600 hover:bg-red-700 text-white p-3 rounded-full transition-colors duration-200 shadow-lg"
+                className="absolute top-4 mobile-landscape:top-2 right-4 mobile-landscape:right-2 z-10 bg-red-600 hover:bg-red-700 text-white p-3 mobile-landscape:p-2 rounded-full transition-colors duration-200 shadow-lg"
               >
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="w-6 h-6 mobile-landscape:w-4 mobile-landscape:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                 </svg>
               </button>
-              <div className="absolute top-4 left-4 z-10 bg-black/70 backdrop-blur-sm px-4 py-2 rounded-lg">
-                <h3 className="text-white font-semibold">{selectedTour.title}</h3>
-                <p className="text-gray-300 text-sm">{selectedTour.description}</p>
+              <div className="absolute top-4 mobile-landscape:top-2 left-4 mobile-landscape:left-2 z-10 bg-black/70 backdrop-blur-sm px-4 mobile-landscape:px-2 py-2 mobile-landscape:py-1 rounded-lg mobile-landscape:rounded">
+                <h3 className="text-white font-semibold mobile-landscape:text-sm">{selectedTour.title}</h3>
+                <p className="text-gray-300 text-sm mobile-landscape:text-xs">{selectedTour.description}</p>
               </div>
               <iframe
                 src={selectedTour.embedUrl}
@@ -401,50 +401,50 @@ export default function HomePage() {
         )}
 
         {/* Contact Section */}
-        <section id="contact" className="min-h-screen flex items-center justify-center p-8">
+        <section id="contact" className="min-h-screen flex items-center justify-center p-8 mobile-landscape:p-4">
           <div className="max-w-7xl mx-auto">
-            <h2 className="text-3xl font-bold mb-6 text-center">Contact Information</h2>
-            <div className="grid grid-cols-2 gap-6">
-              <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6">
-                <h3 className="text-xl font-semibold mb-4">Sales Agent</h3>
-                <div className="flex items-center space-x-4 mb-4">
+            <h2 className="text-3xl mobile-landscape:text-xl font-bold mb-6 mobile-landscape:mb-4 text-center">Contact Information</h2>
+            <div className="grid grid-cols-2 mobile-landscape:grid-cols-1 gap-6 mobile-landscape:gap-4">
+              <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6 mobile-landscape:p-4">
+                <h3 className="text-xl mobile-landscape:text-lg font-semibold mb-4 mobile-landscape:mb-2">Sales Agent</h3>
+                <div className="flex items-center space-x-4 mobile-landscape:space-x-2 mb-4 mobile-landscape:mb-2">
                   <img 
                     src={samplePropertyData.contact.agents[0]?.photo} 
                     alt={samplePropertyData.contact.agents[0]?.name} 
-                    className="w-16 h-16 object-cover rounded-full"
+                    className="w-16 h-16 mobile-landscape:w-12 mobile-landscape:h-12 object-cover rounded-full"
                   />
                   <div>
-                    <h4 className="font-semibold">{samplePropertyData.contact.agents[0]?.name}</h4>
-                    <p className="text-gray-400">{samplePropertyData.contact.agents[0]?.title}</p>
+                    <h4 className="font-semibold mobile-landscape:text-sm">{samplePropertyData.contact.agents[0]?.name}</h4>
+                    <p className="text-gray-400 mobile-landscape:text-xs">{samplePropertyData.contact.agents[0]?.title}</p>
                   </div>
                 </div>
-                <div className="space-y-2">
-                  <p className="flex items-center space-x-2">
+                <div className="space-y-2 mobile-landscape:space-y-1">
+                  <p className="flex items-center space-x-2 mobile-landscape:text-sm">
                     <span>📞</span>
                     <span>{samplePropertyData.contact.agents[0]?.phone}</span>
                   </p>
-                  <p className="flex items-center space-x-2">
+                  <p className="flex items-center space-x-2 mobile-landscape:text-sm">
                     <span>✉️</span>
                     <span>{samplePropertyData.contact.agents[0]?.email}</span>
                   </p>
                 </div>
               </div>
-              <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6">
-                <h3 className="text-xl font-semibold mb-4">Sales Office</h3>
-                <div className="space-y-2">
-                  <p className="flex items-center space-x-2">
+              <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6 mobile-landscape:p-4">
+                <h3 className="text-xl mobile-landscape:text-lg font-semibold mb-4 mobile-landscape:mb-2">Sales Office</h3>
+                <div className="space-y-2 mobile-landscape:space-y-1">
+                  <p className="flex items-center space-x-2 mobile-landscape:text-sm">
                     <span>🏢</span>
                     <span>Sales Office</span>
                   </p>
-                  <p className="flex items-center space-x-2">
+                  <p className="flex items-center space-x-2 mobile-landscape:text-sm">
                     <span>📍</span>
                     <span>{samplePropertyData.contact.office.address}</span>
                   </p>
-                  <p className="flex items-center space-x-2">
+                  <p className="flex items-center space-x-2 mobile-landscape:text-sm">
                     <span>📞</span>
                     <span>{samplePropertyData.contact.office.phone}</span>
                   </p>
-                  <p className="flex items-center space-x-2">
+                  <p className="flex items-center space-x-2 mobile-landscape:text-sm">
                     <span>🕒</span>
                     <span>{samplePropertyData.contact.office.hours[0]}</span>
                   </p>
@@ -461,9 +461,9 @@ export default function HomePage() {
           <div className="relative w-full h-full">
             <button
               onClick={close3DModal}
-              className="absolute top-4 right-4 z-10 bg-white/20 hover:bg-white/30 text-white p-2 rounded-full transition-colors duration-200"
+              className="absolute top-4 mobile-landscape:top-2 right-4 mobile-landscape:right-2 z-10 bg-white/20 hover:bg-white/30 text-white p-2 mobile-landscape:p-1 rounded-full transition-colors duration-200 mobile-landscape:text-sm"
             >
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="w-6 h-6 mobile-landscape:w-4 mobile-landscape:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
               </svg>
             </button>
@@ -488,7 +488,7 @@ export default function HomePage() {
           onMouseUp={handleMouseUp}
         >
           <div 
-             className="absolute bg-white rounded-lg shadow-2xl border border-gray-300"
+             className="absolute bg-white rounded-lg mobile-landscape:rounded shadow-2xl border border-gray-300"
              style={{
                left: modalPosition.x,
                top: modalPosition.y,
@@ -498,22 +498,22 @@ export default function HomePage() {
            >
              {/* Title Bar */}
              <div 
-               className="bg-gray-100 px-4 py-2 rounded-t-lg flex justify-between items-center border-b cursor-move"
+               className="bg-gray-100 px-4 mobile-landscape:px-2 py-2 mobile-landscape:py-1 rounded-t-lg mobile-landscape:rounded-t flex justify-between items-center border-b cursor-move"
                onMouseDown={handleTitleBarMouseDown}
              >
-               <span className="font-semibold text-gray-800">Floor Plan</span>
+               <span className="font-semibold mobile-landscape:text-sm text-gray-800">Floor Plan</span>
                <button
                  onClick={closeFloorPlanModal}
-                 className="bg-red-500 hover:bg-red-600 text-white p-1 rounded transition-colors duration-200"
+                 className="bg-red-500 hover:bg-red-600 text-white p-1 mobile-landscape:p-0.5 rounded transition-colors duration-200"
                >
-                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                 <svg className="w-4 h-4 mobile-landscape:w-3 mobile-landscape:h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                  </svg>
                </button>
              </div>
              
              {/* Content */}
-              <div className="p-4 overflow-hidden" style={{ height: 'calc(100% - 48px)' }}>
+              <div className="p-4 mobile-landscape:p-2 overflow-hidden" style={{ height: 'calc(100% - 48px)' }}>
                 <img
                   src="/floorplan.png"
                   alt="Floor Plan"
@@ -524,7 +524,7 @@ export default function HomePage() {
             
             {/* Resize Handle */}
             <div 
-              className="absolute bottom-0 right-0 w-4 h-4 bg-gray-400 cursor-se-resize"
+              className="absolute bottom-0 right-0 w-4 h-4 mobile-landscape:w-3 mobile-landscape:h-3 bg-gray-400 cursor-se-resize"
               onMouseDown={handleResizeStart}
               style={{
                 background: 'linear-gradient(-45deg, transparent 0%, transparent 30%, #9ca3af 30%, #9ca3af 70%, transparent 70%)'
@@ -540,9 +540,9 @@ export default function HomePage() {
           <div className="relative w-full h-full">
             <button
               onClick={closeFullView}
-              className="absolute top-4 right-4 z-10 bg-white/20 hover:bg-white/30 text-white p-2 rounded-full transition-colors duration-200"
+              className="absolute top-4 mobile-landscape:top-2 right-4 mobile-landscape:right-2 z-10 bg-white/20 hover:bg-white/30 text-white p-2 mobile-landscape:p-1 rounded-full transition-colors duration-200"
             >
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="w-6 h-6 mobile-landscape:w-4 mobile-landscape:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
               </svg>
             </button>
