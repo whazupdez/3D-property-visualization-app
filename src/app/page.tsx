@@ -1,7 +1,7 @@
 'use client';
 
-import { useState, useEffect, Suspense } from 'react';
-import { Canvas } from '@react-three/fiber';
+import { useState, useEffect, Suspense, useRef } from 'react';
+import { Canvas, useFrame } from '@react-three/fiber';
 import { OrbitControls, useGLTF, Environment } from '@react-three/drei';
 import { samplePropertyData } from '@/data/sampleProperty';
 import { Home, MapPin, Building, Camera, Phone } from 'lucide-react';
@@ -45,6 +45,8 @@ export default function HomePage() {
   const [dragStart, setDragStart] = useState({ x: 0, y: 0 });
   const [resizeStart, setResizeStart] = useState({ x: 0, y: 0, width: 0, height: 0 });
   const [isFullViewOpen, setIsFullViewOpen] = useState(false);
+  const [isAutoOrbit, setIsAutoOrbit] = useState(false);
+  const orbitControlsRef = useRef<any>();
 
 
   const scrollToSection = (sectionId: string) => {
@@ -125,6 +127,32 @@ export default function HomePage() {
   const closeFullView = () => {
     setIsFullViewOpen(false);
   };
+
+  const resetCamera = () => {
+    console.log('Reset camera button clicked!');
+    if (orbitControlsRef.current) {
+      console.log('OrbitControls ref found, calling reset');
+      orbitControlsRef.current.reset();
+    } else {
+      console.log('OrbitControls ref not found');
+    }
+  };
+
+  const toggleAutoOrbit = () => {
+    setIsAutoOrbit(!isAutoOrbit);
+  };
+
+  function AutoOrbitController() {
+    useFrame((state) => {
+      if (isAutoOrbit && orbitControlsRef.current) {
+        orbitControlsRef.current.autoRotate = true;
+        orbitControlsRef.current.autoRotateSpeed = 2.0;
+      } else if (orbitControlsRef.current) {
+        orbitControlsRef.current.autoRotate = false;
+      }
+    });
+    return null;
+  }
 
 
 
@@ -257,7 +285,7 @@ export default function HomePage() {
                     className="w-full h-full object-cover"
                   />
                   <button
-                    onClick={open3DModal}
+                    onClick={openFullView}
                     className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex items-center justify-center text-white font-semibold text-lg mobile-landscape:text-sm hover:bg-black/60"
                   >
                     Open Fullscreen 3D View
@@ -330,7 +358,7 @@ export default function HomePage() {
                     className="w-full h-full object-cover"
                   />
                   <button
-                    onClick={open3DModal}
+                    onClick={openFullView}
                     className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex items-center justify-center text-white font-semibold text-lg mobile-landscape:text-sm hover:bg-black/60"
                   >
                     Open Fullscreen 3D View
@@ -501,7 +529,7 @@ export default function HomePage() {
                 <ambientLight intensity={0.5} />
                 <directionalLight position={[10, 10, 5]} intensity={1} />
                 <BeaksModelHighPoly />
-                <OrbitControls enablePan={true} enableZoom={true} enableRotate={true} />
+                <OrbitControls ref={orbitControlsRef} enablePan={true} enableZoom={true} enableRotate={true} />
               </Suspense>
             </Canvas>
           </div>
@@ -568,14 +596,32 @@ export default function HomePage() {
           <div className="relative w-full h-full">
             <button
               onClick={closeFullView}
-              className="absolute top-4 mobile-landscape:top-2 right-4 mobile-landscape:right-2 z-10 bg-white/20 hover:bg-white/30 text-white p-2 mobile-landscape:p-1 rounded-full transition-colors duration-200"
+              className="absolute bottom-10 left-1/2 transform -translate-x-1/2 translate-x-20 z-[200] bg-white/20 hover:bg-white/30 text-white p-2 rounded-full transition-colors duration-200"
             >
-              <svg className="w-6 h-6 mobile-landscape:w-4 mobile-landscape:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
               </svg>
             </button>
+            <button
+               onClick={resetCamera}
+               className="absolute bottom-10 left-1/2 transform -translate-x-1/2 z-[200] bg-white/20 hover:bg-white/30 text-white p-2 rounded-full transition-colors duration-200"
+             >
+               <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+               </svg>
+             </button>
+            <button
+               onClick={toggleAutoOrbit}
+               className={`absolute bottom-10 left-1/2 transform -translate-x-1/2 -translate-x-20 z-[200] p-2 rounded-full transition-colors duration-200 ${
+                 isAutoOrbit ? 'bg-blue-500 hover:bg-blue-600' : 'bg-white/20 hover:bg-white/30'
+               } text-white`}
+             >
+               <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.5 12a7.5 7.5 0 0015 0m-15 0a7.5 7.5 0 1115 0m-15 0H3m16.5 0H21m-1.5 0H12m-8.457 3.077l1.41-.513m14.095-5.13l1.41-.513M5.106 17.785l1.15-.964m11.49-9.642l1.149-.964M7.501 19.795l.75-1.3m7.5-12.99l.75-1.3m-6.063 16.658l.26-1.477m2.605-14.772l.26-1.477m0 17.726l-.26-1.477M10.698 4.614l-.26-1.477M16.5 19.794l-.75-1.299M7.5 4.205L12 12m6.894 4.553c.12-.919.07-1.853-.148-2.75m-13.492 2.75c-.218-.897-.268-1.831-.148-2.75M12 2.25c5.385 0 9.75 4.365 9.75 9.75s-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12 6.615 2.25 12 2.25z" />
+               </svg>
+             </button>
             <Canvas
-              camera={{ position: [0, 5, 10], fov: 60 }}
+              camera={{ position: [0, 25, 15], fov: 60 }}
               className="w-full h-full"
             >
               <ambientLight intensity={0.5} />
@@ -583,7 +629,14 @@ export default function HomePage() {
               <Suspense fallback={null}>
                 <BeaksModelHighPoly />
               </Suspense>
-              <OrbitControls enablePan={true} enableZoom={true} enableRotate={true} />
+              <OrbitControls 
+                ref={orbitControlsRef} 
+                enablePan={true} 
+                enableZoom={true} 
+                enableRotate={true}
+                onStart={() => setIsAutoOrbit(false)}
+              />
+              <AutoOrbitController />
               <Environment preset="sunset" />
             </Canvas>
           </div>
