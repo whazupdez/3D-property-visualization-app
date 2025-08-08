@@ -6,8 +6,13 @@ import { OrbitControls, useGLTF, Environment } from '@react-three/drei';
 import { samplePropertyData } from '@/data/sampleProperty';
 import { Home, MapPin, Building, Camera, Phone } from 'lucide-react';
 
-// 3D Model Component
-function BeaksModel() {
+// 3D Model Components
+function BeaksModelLowPoly() {
+  const { scene } = useGLTF('/beaks.glb');
+  return <primitive object={scene} />;
+}
+
+function BeaksModelHighPoly() {
   const { scene } = useGLTF('/beaks-hi.glb');
   return <primitive object={scene} />;
 }
@@ -249,7 +254,7 @@ export default function HomePage() {
                       <Environment preset="sunset" />
                       <ambientLight intensity={0.5} />
                       <directionalLight position={[10, 10, 5]} intensity={1} />
-                      <BeaksModel />
+                      <BeaksModelLowPoly />
                       <OrbitControls enablePan={true} enableZoom={true} enableRotate={true} />
                     </Suspense>
                   </Canvas>
@@ -317,7 +322,7 @@ export default function HomePage() {
         <section id="tours" className="min-h-screen flex items-center justify-center p-8 mobile-landscape:p-4 bg-black/20">
           <div className="max-w-7xl mx-auto">
             <h2 className="text-3xl mobile-landscape:text-xl font-bold mb-6 mobile-landscape:mb-4 text-center">Virtual Tours</h2>
-            <div className="grid grid-cols-2 mobile-landscape:grid-cols-1 gap-6 mobile-landscape:gap-4">
+            <div className="grid grid-cols-3 mobile-landscape:grid-cols-1 gap-6 mobile-landscape:gap-4">
               <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6 mobile-landscape:p-4">
                 <h3 className="text-xl mobile-landscape:text-lg font-semibold mb-4 mobile-landscape:mb-2">3D Exterior Tour</h3>
                 <div className="bg-black/50 rounded-lg h-64 mobile-landscape:h-40 mb-4 mobile-landscape:mb-2 overflow-hidden relative group">
@@ -326,7 +331,7 @@ export default function HomePage() {
                       <Environment preset="sunset" />
                       <ambientLight intensity={0.5} />
                       <directionalLight position={[10, 10, 5]} intensity={1} />
-                      <BeaksModel />
+                      <BeaksModelHighPoly />
                       <OrbitControls enablePan={true} enableZoom={true} enableRotate={true} />
                     </Suspense>
                   </Canvas>
@@ -340,7 +345,7 @@ export default function HomePage() {
                 <p className="text-gray-300 mobile-landscape:text-sm">{samplePropertyData.virtualTours.tours3D[0]?.title || 'Building Exterior (High Poly 1.3M)'}</p>
               </div>
               <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6 mobile-landscape:p-4">
-                <h3 className="text-xl mobile-landscape:text-lg font-semibold mb-4 mobile-landscape:mb-2">360° Interior Tour</h3>
+                <h3 className="text-xl mobile-landscape:text-lg font-semibold mb-4 mobile-landscape:mb-2">360° Interior (Modern)</h3>
                 <div className="bg-black/50 rounded-lg h-64 mobile-landscape:h-40 overflow-hidden mb-4 mobile-landscape:mb-2 relative group">
                   {samplePropertyData.virtualTours.tours360[0]?.embedUrl ? (
                     <>
@@ -367,6 +372,35 @@ export default function HomePage() {
                   )}
                 </div>
                 <p className="text-gray-300 mobile-landscape:text-sm">{samplePropertyData.virtualTours.tours360[0]?.description || 'Interactive interior walkthrough'}</p>
+              </div>
+              <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6 mobile-landscape:p-4">
+                <h3 className="text-xl mobile-landscape:text-lg font-semibold mb-4 mobile-landscape:mb-2">360° Interior (minimalist)</h3>
+                <div className="bg-black/50 rounded-lg h-64 mobile-landscape:h-40 overflow-hidden mb-4 mobile-landscape:mb-2 relative group">
+                  {samplePropertyData.virtualTours.tours360[0]?.embedUrl ? (
+                    <>
+                      <iframe
+                        src={samplePropertyData.virtualTours.tours360[0].embedUrl}
+                        className="w-full h-full border-0"
+                        allowFullScreen
+                        title="Minimalist Interior 360°"
+                      />
+                      <button
+                        onClick={() => openTourModal(samplePropertyData.virtualTours.tours360[0])}
+                        className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex items-center justify-center text-white font-semibold text-lg mobile-landscape:text-sm hover:bg-black/60"
+                      >
+                        Open Fullscreen VR
+                      </button>
+                    </>
+                  ) : (
+                    <div className="w-full h-full flex items-center justify-center">
+                      <div className="text-center">
+                        <div className="text-4xl mobile-landscape:text-2xl mb-2">🏠</div>
+                        <div className="mobile-landscape:text-sm">360° View</div>
+                      </div>
+                    </div>
+                  )}
+                </div>
+                <p className="text-gray-300 mobile-landscape:text-sm">Minimalist design interior walkthrough</p>
               </div>
             </div>
             
@@ -472,7 +506,7 @@ export default function HomePage() {
                 <Environment preset="sunset" />
                 <ambientLight intensity={0.5} />
                 <directionalLight position={[10, 10, 5]} intensity={1} />
-                <BeaksModel />
+                <BeaksModelHighPoly />
                 <OrbitControls enablePan={true} enableZoom={true} enableRotate={true} />
               </Suspense>
             </Canvas>

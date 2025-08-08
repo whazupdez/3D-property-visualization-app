@@ -88,7 +88,7 @@ export const samplePropertyData: PropertyData = {
     {
       id: "1br-deluxe",
       name: "1BR Deluxe",
-      price: 750000,
+      price: 250000,
       specs: {
         bedrooms: 1,
         bathrooms: 1,
@@ -112,7 +112,7 @@ export const samplePropertyData: PropertyData = {
     {
       id: "2br-premium",
       name: "2BR Premium",
-      price: 950000,
+      price: 300000,
       specs: {
         bedrooms: 2,
         bathrooms: 2,
@@ -138,7 +138,7 @@ export const samplePropertyData: PropertyData = {
     {
       id: "3br-penthouse",
       name: "3BR Penthouse",
-      price: 1500000,
+      price: 350000,
       specs: {
         bedrooms: 3,
         bathrooms: 2,
