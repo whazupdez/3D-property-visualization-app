@@ -251,15 +251,11 @@ export default function HomePage() {
               </div>
               <div>
                 <div className="bg-black/50 rounded-lg h-96 mobile-landscape:h-48 overflow-hidden relative group">
-                  <Canvas camera={{ position: [5, 5, 5], fov: 50 }}>
-                    <Suspense fallback={null}>
-                      <Environment preset="sunset" />
-                      <ambientLight intensity={0.5} />
-                      <directionalLight position={[10, 10, 5]} intensity={1} />
-                      <BeaksModelHighPoly />
-                      <OrbitControls enablePan={true} enableZoom={true} enableRotate={true} />
-                    </Suspense>
-                  </Canvas>
+                  <img 
+                    src="/mardini-01.png" 
+                    alt="Location 3D Preview" 
+                    className="w-full h-full object-cover"
+                  />
                   <button
                     onClick={open3DModal}
                     className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex items-center justify-center text-white font-semibold text-lg mobile-landscape:text-sm hover:bg-black/60"
@@ -328,15 +324,11 @@ export default function HomePage() {
               <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6 mobile-landscape:p-4">
                 <h3 className="text-xl mobile-landscape:text-lg font-semibold mb-4 mobile-landscape:mb-2">3D Exterior Tour</h3>
                 <div className="bg-black/50 rounded-lg h-64 mobile-landscape:h-40 mb-4 mobile-landscape:mb-2 overflow-hidden relative group">
-                  <Canvas camera={{ position: [5, 5, 5], fov: 50 }}>
-                    <Suspense fallback={null}>
-                      <Environment preset="sunset" />
-                      <ambientLight intensity={0.5} />
-                      <directionalLight position={[10, 10, 5]} intensity={1} />
-                      <BeaksModelHighPoly />
-                      <OrbitControls enablePan={true} enableZoom={true} enableRotate={true} />
-                    </Suspense>
-                  </Canvas>
+                  <img 
+                    src="/mardini-01.png" 
+                    alt="3D Exterior Preview" 
+                    className="w-full h-full object-cover"
+                  />
                   <button
                     onClick={open3DModal}
                     className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex items-center justify-center text-white font-semibold text-lg mobile-landscape:text-sm hover:bg-black/60"
