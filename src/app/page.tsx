@@ -162,11 +162,13 @@ export default function HomePage() {
   }, []);
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 via-blue-900 to-purple-900">
+      {/* Title Header */}
+      <h1 className="fixed top-4 left-1/2 transform -translate-x-1/2 z-50 text-2xl mobile-landscape:text-lg font-bold text-white text-center">{samplePropertyData.overview.name}</h1>
+      
       {/* Navigation */}
-      <nav className="fixed top-0 left-0 right-0 z-50 bg-black/20 backdrop-blur-md border-b border-white/10">
+      <nav className="fixed bottom-0 left-0 right-0 z-50 bg-black/20 backdrop-blur-md border-t border-white/10">
         <div className="max-w-7xl mx-auto px-4 mobile-landscape:px-2 py-4 mobile-landscape:py-2">
-          <div className="flex items-center justify-between mobile-landscape:flex-col mobile-landscape:space-y-2">
-            <h1 className="text-2xl mobile-landscape:text-lg font-bold text-white mobile-landscape:text-center">{samplePropertyData.overview.name}</h1>
+          <div className="flex items-center justify-center mobile-landscape:flex-col mobile-landscape:space-y-2">
             <div className="flex space-x-4 mobile-landscape:space-x-2 mobile-landscape:flex-wrap mobile-landscape:justify-center">
               {navigationSections.map((section) => {
                 const IconComponent = section.icon;
@@ -191,7 +193,7 @@ export default function HomePage() {
       </nav>
 
       {/* Main Content */}
-      <main className="pt-20 mobile-landscape:pt-24 space-y-0">
+      <main className="pb-20 mobile-landscape:pb-24 space-y-0">
         {/* Overview Section */}
         <section id="overview" className="min-h-screen flex items-center justify-center p-8 mobile-landscape:p-4">
           <div className="max-w-7xl mx-auto grid grid-cols-2 mobile-landscape:grid-cols-1 gap-12 mobile-landscape:gap-6 items-center">
@@ -254,7 +256,7 @@ export default function HomePage() {
                       <Environment preset="sunset" />
                       <ambientLight intensity={0.5} />
                       <directionalLight position={[10, 10, 5]} intensity={1} />
-                      <BeaksModelLowPoly />
+                      <BeaksModelHighPoly />
                       <OrbitControls enablePan={true} enableZoom={true} enableRotate={true} />
                     </Suspense>
                   </Canvas>
@@ -269,7 +271,7 @@ export default function HomePage() {
                   onClick={openFullView}
                   className="w-full mt-4 mobile-landscape:mt-2 bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 mobile-landscape:py-1 px-4 mobile-landscape:px-2 mobile-landscape:text-sm rounded transition-colors duration-200"
                 >
-                  Full View (Low Poly)
+                  Full View
                 </button>
               </div>
             </div>
@@ -587,7 +589,7 @@ export default function HomePage() {
               <ambientLight intensity={0.5} />
               <directionalLight position={[10, 10, 5]} intensity={1} />
               <Suspense fallback={null}>
-                <FullViewBeaksModel />
+                <BeaksModelHighPoly />
               </Suspense>
               <OrbitControls enablePan={true} enableZoom={true} enableRotate={true} />
               <Environment preset="sunset" />
