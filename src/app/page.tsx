@@ -8,12 +8,12 @@ import { Home, MapPin, Building, Camera, Phone } from 'lucide-react';
 
 // 3D Model Component
 function BeaksModel() {
-  const { scene } = useGLTF('/beaks.glb');
+  const { scene } = useGLTF('/beaks-hi.glb');
   return <primitive object={scene} />;
 }
 
 function FullViewBeaksModel() {
-  const { scene } = useGLTF('/beaks.glb');
+  const { scene } = useGLTF('/beaks-hi.glb');
   return <primitive object={scene} />;
 }
 
@@ -264,7 +264,7 @@ export default function HomePage() {
                   onClick={openFullView}
                   className="w-full mt-4 mobile-landscape:mt-2 bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 mobile-landscape:py-1 px-4 mobile-landscape:px-2 mobile-landscape:text-sm rounded transition-colors duration-200"
                 >
-                  Full View
+                  Full View (Low Poly)
                 </button>
               </div>
             </div>
@@ -337,7 +337,7 @@ export default function HomePage() {
                     Open Fullscreen 3D View
                   </button>
                 </div>
-                <p className="text-gray-300 mobile-landscape:text-sm">{samplePropertyData.virtualTours.tours3D[0]?.title || 'Interactive 3D Building Model'}</p>
+                <p className="text-gray-300 mobile-landscape:text-sm">{samplePropertyData.virtualTours.tours3D[0]?.title || 'Building Exterior (High Poly 1.3M)'}</p>
               </div>
               <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6 mobile-landscape:p-4">
                 <h3 className="text-xl mobile-landscape:text-lg font-semibold mb-4 mobile-landscape:mb-2">360° Interior Tour</h3>
