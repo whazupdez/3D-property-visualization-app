@@ -1,8 +1,8 @@
 'use client';
 
-import React, { useState } from 'react';
+import React from 'react';
 import { motion } from 'framer-motion';
-import { Play, Pause, DollarSign, Home, Maximize, Users } from 'lucide-react';
+import { DollarSign, Home, Maximize, Users } from 'lucide-react';
 import { PropertyData } from '@/types/property';
 
 interface OverviewSectionProps {
@@ -10,13 +10,6 @@ interface OverviewSectionProps {
 }
 
 export default function OverviewSection({ data }: OverviewSectionProps) {
-  const [isVideoPlaying, setIsVideoPlaying] = useState(false);
-  const [showVideo, setShowVideo] = useState(false);
-
-  const toggleVideo = () => {
-    setShowVideo(!showVideo);
-    setIsVideoPlaying(!showVideo);
-  };
 
   const formatPrice = (price: number, currency: string) => {
     return new Intl.NumberFormat('en-US', {
@@ -33,21 +26,13 @@ export default function OverviewSection({ data }: OverviewSectionProps) {
       <div className="w-3/5 h-full relative overflow-hidden">
         {/* Hero Media */}
         <div className="absolute inset-0">
-          {showVideo && data.heroVideo ? (
-            <video
-              className="w-full h-full object-cover"
-              src={data.heroVideo}
-              autoPlay={isVideoPlaying}
-              muted
-              loop
-              onLoadedData={() => setIsVideoPlaying(true)}
-            />
-          ) : (
-            <div 
-              className="w-full h-full bg-cover bg-center bg-no-repeat"
-              style={{ backgroundImage: `url(${data.heroImage})` }}
-            />
-          )}
+          <video
+            className="w-full h-full object-cover"
+            src="/madani-video-low.mp4"
+            autoPlay
+            muted
+            loop
+          />
           
           {/* Overlay Gradient */}
           <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
@@ -70,32 +55,7 @@ export default function OverviewSection({ data }: OverviewSectionProps) {
             </p>
           </motion.div>
 
-          {/* Video Toggle Button */}
-          {data.heroVideo && (
-            <motion.button
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.4, delay: 0.4 }}
-              onClick={toggleVideo}
-              className="
-                flex items-center space-x-3 bg-white/20 backdrop-blur-sm
-                px-6 py-4 rounded-xl hover:bg-white/30 transition-all duration-300
-                min-w-tv-button border border-white/30
-              "
-            >
-              {showVideo ? (
-                <>
-                  <Pause size={24} />
-                  <span className="text-tv-button">Pause Video</span>
-                </>
-              ) : (
-                <>
-                  <Play size={24} />
-                  <span className="text-tv-button">Play Video Tour</span>
-                </>
-              )}
-            </motion.button>
-          )}
+
         </div>
       </div>
 

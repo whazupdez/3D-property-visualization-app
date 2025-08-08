@@ -62,6 +62,8 @@ export default function HomePage() {
     setIsModalOpen(true);
   };
 
+
+
   const closeTourModal = () => {
     setSelectedTour(null);
     setIsModalOpen(false);
@@ -279,10 +281,12 @@ export default function HomePage() {
               </div>
               <div>
                 <div className="bg-black/50 rounded-lg h-96 mobile-landscape:h-48 overflow-hidden relative group">
-                  <img 
-                    src="/mardini-01.png" 
-                    alt="Location 3D Preview" 
+                  <video 
+                    src="/madani-video-low.mp4" 
                     className="w-full h-full object-cover"
+                    autoPlay
+                    loop
+                    muted
                   />
                   <button
                     onClick={openFullView}
@@ -352,10 +356,12 @@ export default function HomePage() {
               <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6 mobile-landscape:p-4">
                 <h3 className="text-xl mobile-landscape:text-lg font-semibold mb-4 mobile-landscape:mb-2">3D Exterior Tour</h3>
                 <div className="bg-black/50 rounded-lg h-64 mobile-landscape:h-40 mb-4 mobile-landscape:mb-2 overflow-hidden relative group">
-                  <img 
-                    src="/mardini-01.png" 
-                    alt="3D Exterior Preview" 
+                  <video 
+                    src="/madani-video-low.mp4" 
                     className="w-full h-full object-cover"
+                    autoPlay
+                    loop
+                    muted
                   />
                   <button
                     onClick={openFullView}
@@ -436,7 +442,7 @@ export default function HomePage() {
             <div className="relative w-full h-full max-w-7xl mobile-landscape:max-w-full max-h-[90vh] mobile-landscape:max-h-full bg-black rounded-lg mobile-landscape:rounded overflow-hidden">
               <button
                 onClick={closeTourModal}
-                className="absolute top-4 mobile-landscape:top-2 right-4 mobile-landscape:right-2 z-10 bg-red-600 hover:bg-red-700 text-white p-3 mobile-landscape:p-2 rounded-full transition-colors duration-200 shadow-lg"
+                className="absolute bottom-4 mobile-landscape:bottom-2 left-1/2 transform -translate-x-1/2 z-10 bg-white hover:bg-gray-200 text-black p-3 mobile-landscape:p-2 rounded-full transition-colors duration-200 shadow-lg"
               >
                 <svg className="w-6 h-6 mobile-landscape:w-4 mobile-landscape:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
