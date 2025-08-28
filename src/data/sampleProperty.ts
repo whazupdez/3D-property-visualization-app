@@ -216,6 +216,31 @@ export const samplePropertyData: PropertyData = {
             target: [0, 1, 0]
           }
         ]
+      },
+      {
+        id: "madani-exterior",
+        title: "MADANI Exterior 3D",
+        description: "Explore the stunning MADANI building exterior",
+        modelPath: "https://antlogic.ai/MADANI_map.glb",
+        thumbnail: "/images/tours/madani-exterior-thumb.jpg",
+        duration: "4-6 min",
+        cameraPositions: [
+          {
+            name: "Front Entrance",
+            position: [0, 8, 20],
+            target: [0, 10, 0]
+          },
+          {
+            name: "Side Perspective",
+            position: [20, 12, 8],
+            target: [0, 10, 0]
+          },
+          {
+            name: "Bird's Eye View",
+            position: [15, 25, 15],
+            target: [0, 5, 0]
+          }
+        ]
       }
     ],
     tours360: [

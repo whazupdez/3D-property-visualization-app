@@ -93,3 +93,6 @@ coverage/
 # Temporary folders
 tmp/
 temp/
+
+# 3D model files
+public/MADANI_map.glb

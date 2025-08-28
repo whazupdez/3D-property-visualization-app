@@ -22,6 +22,28 @@ function FullViewBeaksModel() {
   return <primitive object={scene} />;
 }
 
+function MadaniModel() {
+  const [modelPath, setModelPath] = useState('/MADANI_map.glb'); // Start with local file
+  
+  useEffect(() => {
+    // Test if external URL is accessible
+    fetch('https://antlogic.ai/MADANI_map.glb', { method: 'HEAD' })
+      .then(response => {
+        if (response.ok) {
+          console.log('External GLB accessible, using external file');
+          setModelPath('https://antlogic.ai/MADANI_map.glb');
+        }
+      })
+      .catch(() => {
+        console.warn('External GLB not accessible, using local file');
+        setModelPath('/MADANI_map.glb');
+      });
+  }, []);
+  
+  const { scene } = useGLTF(modelPath);
+  return <primitive object={scene} />;
+}
+
 
 
 const navigationSections = [
@@ -46,7 +68,10 @@ export default function HomePage() {
   const [resizeStart, setResizeStart] = useState({ x: 0, y: 0, width: 0, height: 0 });
   const [isFullViewOpen, setIsFullViewOpen] = useState(false);
   const [isAutoOrbit, setIsAutoOrbit] = useState(false);
+  const [current3DModel, setCurrent3DModel] = useState('beaks');
+  const [isMadaniFullViewOpen, setIsMadaniFullViewOpen] = useState(false);
   const orbitControlsRef = useRef<any>();
+  const madaniOrbitControlsRef = useRef<any>();
 
 
   const scrollToSection = (sectionId: string) => {
@@ -70,7 +95,21 @@ export default function HomePage() {
   };
 
   const open3DModal = () => {
+    setCurrent3DModel('beaks');
     setIs3DModalOpen(true);
+  };
+
+  const openMadani3DModal = () => {
+    setCurrent3DModel('madani');
+    setIs3DModalOpen(true);
+  };
+
+  const openMadaniFullView = () => {
+    setIsMadaniFullViewOpen(true);
+  };
+
+  const closeMadaniFullView = () => {
+    setIsMadaniFullViewOpen(false);
   };
 
   const close3DModal = () => {
@@ -144,6 +183,25 @@ export default function HomePage() {
     setIsAutoOrbit(!isAutoOrbit);
   };
 
+  const resetMadaniCamera = () => {
+    console.log('Reset MADANI camera button clicked!');
+    if (madaniOrbitControlsRef.current) {
+      console.log('MADANI OrbitControls ref found, calling reset');
+      // Set camera to the new default position
+      madaniOrbitControlsRef.current.object.position.set(30, 40, 30);
+      madaniOrbitControlsRef.current.target.set(0, 0, 0);
+      madaniOrbitControlsRef.current.update();
+    } else {
+      console.log('MADANI OrbitControls ref not found');
+    }
+  };
+
+  const [isMadaniAutoOrbit, setIsMadaniAutoOrbit] = useState(false);
+
+  const toggleMadaniAutoOrbit = () => {
+    setIsMadaniAutoOrbit(!isMadaniAutoOrbit);
+  };
+
   function AutoOrbitController() {
     useFrame((state) => {
       if (isAutoOrbit && orbitControlsRef.current) {
@@ -151,6 +209,18 @@ export default function HomePage() {
         orbitControlsRef.current.autoRotateSpeed = 2.0;
       } else if (orbitControlsRef.current) {
         orbitControlsRef.current.autoRotate = false;
+      }
+    });
+    return null;
+  }
+
+  function MadaniAutoOrbitController() {
+    useFrame((state) => {
+      if (isMadaniAutoOrbit && madaniOrbitControlsRef.current) {
+        madaniOrbitControlsRef.current.autoRotate = true;
+        madaniOrbitControlsRef.current.autoRotateSpeed = 2.0;
+      } else if (madaniOrbitControlsRef.current) {
+        madaniOrbitControlsRef.current.autoRotate = false;
       }
     });
     return null;
@@ -282,21 +352,22 @@ export default function HomePage() {
               <div>
                 <div className="bg-black/50 rounded-lg h-96 mobile-landscape:h-48 overflow-hidden relative group">
                   <video 
-                    src="/madani-video-low.mp4" 
+                    src="/madani-view.mp4" 
                     className="w-full h-full object-cover"
                     autoPlay
                     loop
                     muted
+                    playsInline
                   />
                   <button
-                    onClick={openFullView}
+                    onClick={openMadaniFullView}
                     className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex items-center justify-center text-white font-semibold text-lg mobile-landscape:text-sm hover:bg-black/60"
                   >
                     Open Fullscreen 3D View
                   </button>
                 </div>
                 <button
-                  onClick={openFullView}
+                  onClick={openMadaniFullView}
                   className="w-full mt-4 mobile-landscape:mt-2 bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 mobile-landscape:py-1 px-4 mobile-landscape:px-2 mobile-landscape:text-sm rounded transition-colors duration-200"
                 >
                   Full View
@@ -352,10 +423,10 @@ export default function HomePage() {
         <section id="tours" className="min-h-screen flex items-center justify-center p-8 mobile-landscape:p-4 bg-black/20">
           <div className="max-w-7xl mx-auto">
             <h2 className="text-3xl mobile-landscape:text-xl font-bold mb-6 mobile-landscape:mb-4 text-center">Virtual Tours</h2>
-            <div className="grid grid-cols-3 mobile-landscape:grid-cols-1 gap-6 mobile-landscape:gap-4">
-              <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6 mobile-landscape:p-4">
+            <div className="grid grid-cols-2 mobile-landscape:grid-cols-1 gap-6 mobile-landscape:gap-4">
+              <div className="bg-white/10 backdrop-blur-sm rounded-xl p-5 mobile-landscape:p-3">
                 <h3 className="text-xl mobile-landscape:text-lg font-semibold mb-4 mobile-landscape:mb-2">3D Exterior Tour</h3>
-                <div className="bg-black/50 rounded-lg h-64 mobile-landscape:h-40 mb-4 mobile-landscape:mb-2 overflow-hidden relative group">
+                <div className="bg-black/50 rounded-lg h-52 mobile-landscape:h-32 mb-3 mobile-landscape:mb-2 overflow-hidden relative group">
                   <video 
                     src="/madani-video-low.mp4" 
                     className="w-full h-full object-cover"
@@ -372,9 +443,31 @@ export default function HomePage() {
                 </div>
                 <p className="text-gray-300 mobile-landscape:text-sm">{samplePropertyData.virtualTours.tours3D[0]?.title || 'Building Exterior (High Poly 1.3M)'}</p>
               </div>
-              <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6 mobile-landscape:p-4">
-                <h3 className="text-xl mobile-landscape:text-lg font-semibold mb-4 mobile-landscape:mb-2">360° Interior (Modern)</h3>
-                <div className="bg-black/50 rounded-lg h-64 mobile-landscape:h-40 overflow-hidden mb-4 mobile-landscape:mb-2 relative group">
+              <div className="bg-white/10 backdrop-blur-sm rounded-xl p-5 mobile-landscape:p-3">
+                  <h3 className="text-xl mobile-landscape:text-lg font-semibold mb-4 mobile-landscape:mb-2">MADANI Exterior Tour</h3>
+                  <div className="bg-black/50 rounded-lg h-52 mobile-landscape:h-32 mb-3 mobile-landscape:mb-2 overflow-hidden relative group">
+                  <video
+                    className="w-full h-full object-cover"
+                    autoPlay
+                    muted
+                    loop
+                    playsInline
+                  >
+                    <source src="/madani-view.mp4" type="video/mp4" />
+                    Your browser does not support the video tag.
+                  </video>
+                  <button
+                    onClick={openMadaniFullView}
+                    className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex items-center justify-center text-white font-semibold text-lg mobile-landscape:text-sm hover:bg-black/60"
+                  >
+                    Open Fullscreen 3D View
+                  </button>
+                </div>
+                <p className="text-gray-300 mobile-landscape:text-sm">MADANI Building Exterior</p>
+              </div>
+              <div className="bg-white/10 backdrop-blur-sm rounded-xl p-5 mobile-landscape:p-3">
+                  <h3 className="text-xl mobile-landscape:text-lg font-semibold mb-4 mobile-landscape:mb-2">360° Interior (Modern)</h3>
+                  <div className="bg-black/50 rounded-lg h-52 mobile-landscape:h-32 overflow-hidden mb-3 mobile-landscape:mb-2 relative group">
                   {samplePropertyData.virtualTours.tours360[0]?.embedUrl ? (
                     <>
                       <iframe
@@ -401,9 +494,9 @@ export default function HomePage() {
                 </div>
                 <p className="text-gray-300 mobile-landscape:text-sm">{samplePropertyData.virtualTours.tours360[0]?.description || 'Interactive interior walkthrough'}</p>
               </div>
-              <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6 mobile-landscape:p-4">
-                <h3 className="text-xl mobile-landscape:text-lg font-semibold mb-4 mobile-landscape:mb-2">360° Interior (minimalist)</h3>
-                <div className="bg-black/50 rounded-lg h-64 mobile-landscape:h-40 overflow-hidden mb-4 mobile-landscape:mb-2 relative group">
+              <div className="bg-white/10 backdrop-blur-sm rounded-xl p-5 mobile-landscape:p-3">
+                  <h3 className="text-xl mobile-landscape:text-lg font-semibold mb-4 mobile-landscape:mb-2">360° Interior (minimalist)</h3>
+                  <div className="bg-black/50 rounded-lg h-52 mobile-landscape:h-32 overflow-hidden mb-3 mobile-landscape:mb-2 relative group">
                   {samplePropertyData.virtualTours.tours360[0]?.embedUrl ? (
                     <>
                       <iframe
@@ -534,7 +627,7 @@ export default function HomePage() {
                 <Environment preset="sunset" />
                 <ambientLight intensity={0.5} />
                 <directionalLight position={[10, 10, 5]} intensity={1} />
-                <BeaksModelHighPoly />
+                {current3DModel === 'beaks' ? <BeaksModelHighPoly /> : <MadaniModel />}
                 <OrbitControls ref={orbitControlsRef} enablePan={true} enableZoom={true} enableRotate={true} />
               </Suspense>
             </Canvas>
@@ -627,7 +720,7 @@ export default function HomePage() {
                </svg>
              </button>
             <Canvas
-              camera={{ position: [0, 25, 15], fov: 60 }}
+              camera={{ position: [30, 40, 30], fov: 50 }}
               className="w-full h-full"
             >
               <ambientLight intensity={0.5} />
@@ -643,6 +736,59 @@ export default function HomePage() {
                 onStart={() => setIsAutoOrbit(false)}
               />
               <AutoOrbitController />
+              <Environment preset="sunset" />
+            </Canvas>
+          </div>
+        </div>
+      )}
+
+      {/* MADANI Full View Modal */}
+      {isMadaniFullViewOpen && (
+        <div className="fixed inset-0 bg-black z-50">
+          <div className="relative w-full h-full">
+            <button
+              onClick={closeMadaniFullView}
+              className="absolute bottom-10 left-1/2 transform -translate-x-1/2 translate-x-20 z-[200] bg-white/20 hover:bg-white/30 text-white p-2 rounded-full transition-colors duration-200"
+            >
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+            <button
+               onClick={resetMadaniCamera}
+               className="absolute bottom-10 left-1/2 transform -translate-x-1/2 z-[200] bg-white/20 hover:bg-white/30 text-white p-2 rounded-full transition-colors duration-200"
+             >
+               <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+               </svg>
+             </button>
+            <button
+               onClick={toggleMadaniAutoOrbit}
+               className={`absolute bottom-10 left-1/2 transform -translate-x-1/2 -translate-x-20 z-[200] p-2 rounded-full transition-colors duration-200 ${
+                 isMadaniAutoOrbit ? 'bg-blue-500 hover:bg-blue-600' : 'bg-white/20 hover:bg-white/30'
+               } text-white`}
+             >
+               <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.5 12a7.5 7.5 0 0015 0m-15 0a7.5 7.5 0 1115 0m-15 0H3m16.5 0H21m-1.5 0H12m-8.457 3.077l1.41-.513m14.095-5.13l1.41-.513M5.106 17.785l1.15-.964m11.49-9.642l1.149-.964M7.501 19.795l.75-1.3m7.5-12.99l.75-1.3m-6.063 16.658l.26-1.477m2.605-14.772l.26-1.477m0 17.726l-.26-1.477M10.698 4.614l-.26-1.477M16.5 19.794l-.75-1.299M7.5 4.205L12 12m6.894 4.553c.12-.919.07-1.853-.148-2.75m-13.492 2.75c-.218-.897-.268-1.831-.148-2.75M12 2.25c5.385 0 9.75 4.365 9.75 9.75s-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12 6.615 2.25 12 2.25z" />
+               </svg>
+             </button>
+            <Canvas
+              camera={{ position: [0, 25, 15], fov: 60 }}
+              className="w-full h-full"
+            >
+              <ambientLight intensity={0.5} />
+              <directionalLight position={[10, 10, 5]} intensity={1} />
+              <Suspense fallback={null}>
+                <MadaniModel />
+              </Suspense>
+              <OrbitControls 
+                ref={madaniOrbitControlsRef} 
+                enablePan={true} 
+                enableZoom={true} 
+                enableRotate={true}
+                onStart={() => setIsMadaniAutoOrbit(false)}
+              />
+              <MadaniAutoOrbitController />
               <Environment preset="sunset" />
             </Canvas>
           </div>
