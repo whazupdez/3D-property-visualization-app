@@ -221,7 +221,7 @@ export const samplePropertyData: PropertyData = {
         id: "madani-exterior",
         title: "MADANI Exterior 3D",
         description: "Explore the stunning MADANI building exterior",
-        modelPath: "https://antlogic.ai/MADANI_map.glb",
+        modelPath: "/beaks.glb",
         thumbnail: "/images/tours/madani-exterior-thumb.jpg",
         duration: "4-6 min",
         cameraPositions: [

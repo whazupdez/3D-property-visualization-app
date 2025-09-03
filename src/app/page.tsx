@@ -23,24 +23,7 @@ function FullViewBeaksModel() {
 }
 
 function MadaniModel() {
-  const [modelPath, setModelPath] = useState('/MADANI_map.glb'); // Start with local file
-  
-  useEffect(() => {
-    // Test if external URL is accessible
-    fetch('https://antlogic.ai/MADANI_map.glb', { method: 'HEAD' })
-      .then(response => {
-        if (response.ok) {
-          console.log('External GLB accessible, using external file');
-          setModelPath('https://antlogic.ai/MADANI_map.glb');
-        }
-      })
-      .catch(() => {
-        console.warn('External GLB not accessible, using local file');
-        setModelPath('/MADANI_map.glb');
-      });
-  }, []);
-  
-  const { scene } = useGLTF(modelPath);
+  const { scene } = useGLTF('https://antlogic.ai/MADANI_map.glb');
   return <primitive object={scene} />;
 }
 
