@@ -48,6 +48,9 @@ logs
 # Runtime data
 pids
 *.pid
+
+# 3D Model files
+MADANI-vector-map.glb
 *.seed
 *.pid.lock
 

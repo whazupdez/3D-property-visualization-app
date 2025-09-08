@@ -27,6 +27,11 @@ function MadaniModel() {
   return <primitive object={scene} />;
 }
 
+function MadaniVectorModel() {
+  const { scene } = useGLTF('https://antlogic.ai/MADANI-vector-map.glb');
+  return <primitive object={scene} />;
+}
+
 
 
 const navigationSections = [
@@ -53,8 +58,10 @@ export default function HomePage() {
   const [isAutoOrbit, setIsAutoOrbit] = useState(false);
   const [current3DModel, setCurrent3DModel] = useState('beaks');
   const [isMadaniFullViewOpen, setIsMadaniFullViewOpen] = useState(false);
+  const [isPrimeLocationViewOpen, setIsPrimeLocationViewOpen] = useState(false);
   const orbitControlsRef = useRef<any>();
   const madaniOrbitControlsRef = useRef<any>();
+  const primeLocationOrbitControlsRef = useRef<any>();
 
 
   const scrollToSection = (sectionId: string) => {
@@ -209,6 +216,44 @@ export default function HomePage() {
     return null;
   }
 
+  const openPrimeLocationFullView = () => {
+    setIsPrimeLocationViewOpen(true);
+  };
+
+  const closePrimeLocationFullView = () => {
+    setIsPrimeLocationViewOpen(false);
+  };
+
+  const resetPrimeLocationCamera = () => {
+    console.log('Reset Prime Location camera button clicked!');
+    if (primeLocationOrbitControlsRef.current) {
+      console.log('Prime Location OrbitControls ref found, calling reset');
+      primeLocationOrbitControlsRef.current.object.position.set(0, 25, 15);
+      primeLocationOrbitControlsRef.current.target.set(0, 0, 0);
+      primeLocationOrbitControlsRef.current.update();
+    } else {
+      console.log('Prime Location OrbitControls ref not found');
+    }
+  };
+
+  const [isPrimeLocationAutoOrbit, setIsPrimeLocationAutoOrbit] = useState(false);
+
+  const togglePrimeLocationAutoOrbit = () => {
+    setIsPrimeLocationAutoOrbit(!isPrimeLocationAutoOrbit);
+  };
+
+  function PrimeLocationAutoOrbitController() {
+    useFrame((state) => {
+      if (isPrimeLocationAutoOrbit && primeLocationOrbitControlsRef.current) {
+        primeLocationOrbitControlsRef.current.autoRotate = true;
+        primeLocationOrbitControlsRef.current.autoRotateSpeed = 2.0;
+      } else if (primeLocationOrbitControlsRef.current) {
+        primeLocationOrbitControlsRef.current.autoRotate = false;
+      }
+    });
+    return null;
+  }
+
 
 
   useEffect(() => {
@@ -343,14 +388,14 @@ export default function HomePage() {
                     playsInline
                   />
                   <button
-                    onClick={openMadaniFullView}
+                    onClick={openPrimeLocationFullView}
                     className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex items-center justify-center text-white font-semibold text-lg mobile-landscape:text-sm hover:bg-black/60"
                   >
                     Open Fullscreen 3D View
                   </button>
                 </div>
                 <button
-                  onClick={openMadaniFullView}
+                  onClick={openPrimeLocationFullView}
                   className="w-full mt-4 mobile-landscape:mt-2 bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 mobile-landscape:py-1 px-4 mobile-landscape:px-2 mobile-landscape:text-sm rounded transition-colors duration-200"
                 >
                   Full View
@@ -772,6 +817,59 @@ export default function HomePage() {
                 onStart={() => setIsMadaniAutoOrbit(false)}
               />
               <MadaniAutoOrbitController />
+              <Environment preset="sunset" />
+            </Canvas>
+          </div>
+        </div>
+      )}
+
+      {/* Prime Location Full View Modal */}
+      {isPrimeLocationViewOpen && (
+        <div className="fixed inset-0 bg-black z-50">
+          <div className="relative w-full h-full">
+            <button
+              onClick={closePrimeLocationFullView}
+              className="absolute bottom-10 left-1/2 transform -translate-x-1/2 translate-x-20 z-[200] bg-white/20 hover:bg-white/30 text-white p-2 rounded-full transition-colors duration-200"
+            >
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+            <button
+               onClick={resetPrimeLocationCamera}
+               className="absolute bottom-10 left-1/2 transform -translate-x-1/2 z-[200] bg-white/20 hover:bg-white/30 text-white p-2 rounded-full transition-colors duration-200"
+             >
+               <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+               </svg>
+             </button>
+            <button
+               onClick={togglePrimeLocationAutoOrbit}
+               className={`absolute bottom-10 left-1/2 transform -translate-x-1/2 -translate-x-20 z-[200] p-2 rounded-full transition-colors duration-200 ${
+                 isPrimeLocationAutoOrbit ? 'bg-blue-500 hover:bg-blue-600' : 'bg-white/20 hover:bg-white/30'
+               } text-white`}
+             >
+               <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.5 12a7.5 7.5 0 0015 0m-15 0a7.5 7.5 0 1115 0m-15 0H3m16.5 0H21m-1.5 0H12m-8.457 3.077l1.41-.513m14.095-5.13l1.41-.513M5.106 17.785l1.15-.964m11.49-9.642l1.149-.964M7.501 19.795l.75-1.3m7.5-12.99l.75-1.3m-6.063 16.658l.26-1.477m2.605-14.772l.26-1.477m0 17.726l-.26-1.477M10.698 4.614l-.26-1.477M16.5 19.794l-.75-1.299M7.5 4.205L12 12m6.894 4.553c.12-.919.07-1.853-.148-2.75m-13.492 2.75c-.218-.897-.268-1.831-.148-2.75M12 2.25c5.385 0 9.75 4.365 9.75 9.75s-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12 6.615 2.25 12 2.25z" />
+               </svg>
+             </button>
+            <Canvas
+              camera={{ position: [0, 25, 15], fov: 60 }}
+              className="w-full h-full"
+            >
+              <ambientLight intensity={0.5} />
+              <directionalLight position={[10, 10, 5]} intensity={1} />
+              <Suspense fallback={null}>
+                <MadaniVectorModel />
+              </Suspense>
+              <OrbitControls 
+                ref={primeLocationOrbitControlsRef} 
+                enablePan={true} 
+                enableZoom={true} 
+                enableRotate={true}
+                onStart={() => setIsPrimeLocationAutoOrbit(false)}
+              />
+              <PrimeLocationAutoOrbitController />
               <Environment preset="sunset" />
             </Canvas>
           </div>
